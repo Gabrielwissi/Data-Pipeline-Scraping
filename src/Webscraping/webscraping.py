@@ -56,33 +56,6 @@ def extrair_nums_title(title):
     return []
 
 def extrair_imagem_carrossel(driver, link, idx):
-    """Sobe pelo DOM para encontrar o slick-slider pai do link clicado,
-    depois busca o slide ativo (slick-current) para evitar pegar imagens
-    de outros carrosséis na página."""
-    carousel = driver.execute_script("""
-        var link = arguments[0];
-        var el = link;
-        while (el) {
-            if (el.classList && el.classList.contains('slick-slider')) return el;
-            el = el.parentElement;
-        }
-        return null;
-    """, link)
-
-    if carousel:
-        candidatos = carousel.find_elements(
-            By.CSS_SELECTOR,
-            "div.slick-current img:not([class*='icon'])"
-        )
-        return next(
-            (img.get_attribute("data-src") or img.get_attribute("src")
-             for img in candidatos
-             if (img.get_attribute("data-src") or img.get_attribute("src") or "")
-             and not any(excluir in (img.get_attribute("data-src") or img.get_attribute("src") or "")
-             for excluir in [".svg", "/icons/", "play.png"])),
-            None
-        )
-    return Nondef extrair_imagem_carrossel(driver, link, idx):
     carousel = driver.execute_script("""
         var link = arguments[0];
         var el = link;
