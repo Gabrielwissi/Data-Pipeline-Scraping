@@ -1,5 +1,5 @@
 # Data-Pipeline-Scraping
-rojeto de Engenharia de Dados para extração e processamento de informações imobiliárias.
+Projeto de Engenharia de Dados para extração e processamento de informações imobiliárias.
 
 ## 🛠️ Tecnologias
 - **Python / Selenium:** Webscraping do site Diálogo.
