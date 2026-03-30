@@ -1,0 +1,14 @@
+# Python
+__pycache__/
+*.py[cod]
+.venv/
+
+# Dados
+*.csv
+*.xlsx
+*.parquet
+
+# Configurações do VS Code e Databricks
+.vscode/
+.databricks/
+.env
