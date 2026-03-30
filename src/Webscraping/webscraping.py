@@ -74,7 +74,7 @@ def extrair_imagem_carrossel(driver, link, idx):
                 var idx = parseInt(arguments[1]);
                 $(carousel).slick('slickGoTo', idx, true);
             """, carousel, idx)
-            time.sleep(0.8)
+            time.sleep(2)
         except:
             pass
 
