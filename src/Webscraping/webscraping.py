@@ -9,6 +9,8 @@ from webdriver_manager.chrome import ChromeDriverManager
 from selenium.webdriver.common.action_chains import ActionChains
 import time
 import re
+import os
+from dotenv import load_dotenv
 
 # =============================================================
 # CONFIGURAÇÕES
@@ -18,10 +20,14 @@ EXCECOES_NOMES = {
     "The Grand Padre Adelino": "the-grand-padre-adeino",
 }
 
-HOST        = "https://adb-7405605511067219.19.azuredatabricks.net/"
-PROFILE     = "ga76@hotmail.com"
-CLUSTER_ID  = "0319-141604-l9qeqvmq"
-CAMINHO_CSV = "/Volumes/gabriel/default/arquivos/data_gold.csv"
+# Carrega as variáveis do arquivo .env
+load_dotenv()
+
+# Agora o código pega os valores de forma "invisível"
+HOST        = os.getenv("DATABRICKS_HOST")
+PROFILE     = os.getenv("DATABRICKS_PROFILE")
+CLUSTER_ID  = os.getenv("DATABRICKS_CLUSTER_ID")
+CAMINHO_CSV = os.getenv("CAMINHO_CSV")
 
 
 # =============================================================
