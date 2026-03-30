@@ -55,7 +55,6 @@ def extrair_nums_title(title):
         return sorted([metro, dorm], reverse=True)
     return []
 
-
 def extrair_imagem_carrossel(driver, link, idx):
     """Sobe pelo DOM para encontrar o slick-slider pai do link clicado,
     depois busca o slide ativo (slick-current) para evitar pegar imagens
@@ -83,8 +82,42 @@ def extrair_imagem_carrossel(driver, link, idx):
              for excluir in [".svg", "/icons/", "play.png"])),
             None
         )
-    return None
+    return Nondef extrair_imagem_carrossel(driver, link, idx):
+    carousel = driver.execute_script("""
+        var link = arguments[0];
+        var el = link;
+        while (el) {
+            if (el.classList && el.classList.contains('slick-slider')) return el;
+            el = el.parentElement;
+        }
+        return null;
+    """, link)
 
+    if carousel:
+        # Força o Slick a ir para o slide correto via JavaScript
+        try:
+            driver.execute_script("""
+                var carousel = arguments[0];
+                var idx = parseInt(arguments[1]);
+                $(carousel).slick('slickGoTo', idx, true);
+            """, carousel, idx)
+            time.sleep(0.8)
+        except:
+            pass
+
+        candidatos = carousel.find_elements(
+            By.CSS_SELECTOR,
+            "div.slick-current img:not([class*='icon'])"
+        )
+        return next(
+            (img.get_attribute("data-src") or img.get_attribute("src")
+             for img in candidatos
+             if (img.get_attribute("data-src") or img.get_attribute("src") or "")
+             and not any(excluir in (img.get_attribute("data-src") or img.get_attribute("src") or "")
+             for excluir in [".svg", "/icons/", "play.png"])),
+            None
+        )
+    return None
 
 def realizar_retry_plantas(driver, b_fmt, n_fmt, m_alvo, d_alvo):
     canais  = ["studios", "dialogo-offices", "dialogo-mall"]
